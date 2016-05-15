@@ -87,8 +87,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>查询了下C语言的转意字符，并没有”\ “空格的转意。</p>
-<h3 id="一，C语言中默认”-“是没有转意的。"><a href="#一，C语言中默认”-“是没有转意的。" class="headerlink" title="一，C语言中默认”\ “是没有转意的。"></a>一，C语言中默认”\ “是没有转意的。</h3><p><img style="float: left;" src="/images/1.png"></p>
-<p>也是是说空格，转意和没转意是一样的。</p>
+<h3 id="一，C语言中默认”-“是没有转意的。"><a href="#一，C语言中默认”-“是没有转意的。" class="headerlink" title="一，C语言中默认”\ “是没有转意的。"></a>一，C语言中默认”\ “是没有转意的。</h3><p><img align="right" src="/images/1.png"><br>也是是说空格，转意和没转意是一样的。</p>
 <h3 id="二，在linux系统中”-“通常用来表示空格。"><a href="#二，在linux系统中”-“通常用来表示空格。" class="headerlink" title="二，在linux系统中”\ “通常用来表示空格。"></a>二，在linux系统中”\ “通常用来表示空格。</h3><p>因为命令行程序并不能区分有空格的字符串。<br>例如： 给一个程序输入3个名字<br>    li lei<br>    ha mei mei<br>    lin tao<br>如果直接作为命令行启动程序，读入char* argv[]的时候，会认为有7个字符串。<br>所以linux常用”\ “作为命令行转意。<br>输入 li\ lei ha\ mei\ mei lin\ tao<br><img src="/images/2.png" alt="这是一张图片"><br>最后读入的命令行参数为：<br><img src="/images/3.png" alt="这是一张图片"></p>
 <h3 id="三，常见的应用"><a href="#三，常见的应用" class="headerlink" title="三，常见的应用"></a>三，常见的应用</h3><h4 id="1，文件名中包含空格"><a href="#1，文件名中包含空格" class="headerlink" title="1，文件名中包含空格"></a>1，文件名中包含空格</h4><pre><code>mkdir my\ test或者mkdir my\ \ \ \ \ test
 </code></pre><h4 id="2-autoconfig的configure参数设置"><a href="#2-autoconfig的configure参数设置" class="headerlink" title="2, autoconfig的configure参数设置"></a>2, autoconfig的configure参数设置</h4><pre><code>./configure --prefix=/usr --without-tcmalloc --with-debug CXXFLAGS=-g\ -O0 CFLAGS=-g\ -O0 CCASFLAGS=-g\ -O0
@@ -97,7 +96,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/14/linux中的空格转意/" data-id="cio8gzwwm0000cglm3zyppbdf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/14/linux中的空格转意/" data-id="cio8h7u2z0000s4lmwfk3v09b" class="article-share-link">Share</a>
       
       
     </footer>
