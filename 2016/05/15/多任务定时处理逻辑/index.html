@@ -5,22 +5,16 @@
   
   <title>多任务定时处理逻辑(使用超时队列) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="之前做过几个定时处理多个任务的功能，感觉处理的不是很好。现在回想下其实有更好的处理方案。
-场景1:小A让你每隔3秒钟给他发个消息，小B让你每隔4秒给他发个消息，小C让你每个3秒钟给他发个消息，小D每隔19秒，小E7秒，小F10秒。
-场景2：我这边做为服务器端，客户端发一个请求消息过来，请求消息里时间段。比如：XXXXXXXXXXXXXXXXX30。我解析这个消息，得到30。接下来需要等30秒才能">
+  <meta name="description" content="超时队列处理带时间要求的多任务">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多任务定时处理逻辑(使用超时队列)">
 <meta property="og:url" content="http://yoursite.com/2016/05/15/多任务定时处理逻辑/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="之前做过几个定时处理多个任务的功能，感觉处理的不是很好。现在回想下其实有更好的处理方案。
-场景1:小A让你每隔3秒钟给他发个消息，小B让你每隔4秒给他发个消息，小C让你每个3秒钟给他发个消息，小D每隔19秒，小E7秒，小F10秒。
-场景2：我这边做为服务器端，客户端发一个请求消息过来，请求消息里时间段。比如：XXXXXXXXXXXXXXXXX30。我解析这个消息，得到30。接下来需要等30秒才能">
-<meta property="og:updated_time" content="2016-05-15T13:23:33.677Z">
+<meta property="og:description" content="超时队列处理带时间要求的多任务">
+<meta property="og:updated_time" content="2016-05-15T13:30:54.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多任务定时处理逻辑(使用超时队列)">
-<meta name="twitter:description" content="之前做过几个定时处理多个任务的功能，感觉处理的不是很好。现在回想下其实有更好的处理方案。
-场景1:小A让你每隔3秒钟给他发个消息，小B让你每隔4秒给他发个消息，小C让你每个3秒钟给他发个消息，小D每隔19秒，小E7秒，小F10秒。
-场景2：我这边做为服务器端，客户端发一个请求消息过来，请求消息里时间段。比如：XXXXXXXXXXXXXXXXX30。我解析这个消息，得到30。接下来需要等30秒才能">
+<meta name="twitter:description" content="超时队列处理带时间要求的多任务">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -91,8 +85,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<p>之前做过几个定时处理多个任务的功能，感觉处理的不是很好。现在回想下其实有更好的处理方案。</p>
+        <p>超时队列处理带时间要求的多任务<br><a id="more"></a><br>之前做过几个定时处理多个任务的功能，感觉处理的不是很好。现在回想下其实有更好的处理方案。</p>
 <p>场景1:小A让你每隔3秒钟给他发个消息，小B让你每隔4秒给他发个消息，小C让你每个3秒钟给他发个消息，小D每隔19秒，小E7秒，小F10秒。</p>
 <p>场景2：我这边做为服务器端，客户端发一个请求消息过来，请求消息里时间段。比如：XXXXXXXXXXXXXXXXX30。我解析这个消息，得到30。接下来需要等30秒才能给他回复应答。服务器需要面对成千个客户端，每个客户端发送请求消息过来，都会带有一个时间m。接下里需要延迟m秒，来给发送请求的客户端回复。</p>
 <p>当然，任务这么多，不可能开N个线程，N个定时器，肯定是用任务队列来做。</p>
@@ -104,7 +97,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/多任务定时处理逻辑/" data-id="cio8m8gw10001jwlmf592raz7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/15/多任务定时处理逻辑/" data-id="cio8meajz00020klm3t2tym4a" class="article-share-link">Share</a>
       
       
     </footer>
