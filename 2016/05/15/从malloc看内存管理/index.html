@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>从malloc看内存管理 | shiqi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="malloc内部原因和应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从malloc看内存管理">
+<meta property="og:url" content="http://yoursite.com/2016/05/15/从malloc看内存管理/index.html">
+<meta property="og:site_name" content="shiqi">
+<meta property="og:description" content="malloc内部原因和应用">
+<meta property="og:image" content="http://yoursite.com/images/4.png">
+<meta property="og:image" content="http://yoursite.com/images/5.png">
+<meta property="og:image" content="http://yoursite.com/images/6.png">
+<meta property="og:image" content="http://yoursite.com/images/7.png">
+<meta property="og:updated_time" content="2016-05-15T13:29:38.471Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从malloc看内存管理">
+<meta name="twitter:description" content="malloc内部原因和应用">
+<meta name="twitter:image" content="http://yoursite.com/images/4.png">
+  
+    <link rel="alternative" href="/atom.xml" title="shiqi" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/dog.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-ribbon" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						<div class="icon-wrap icon-house hide" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Tags</li>
+						<li>Menu</li>
+						
+						<li>Links</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				
+				<section class="switch-part switch-part1">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+
+				<section class="switch-part switch-part2">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/dog.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-从malloc看内存管理" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/15/从malloc看内存管理/" class="article-date">
+  	<time datetime="2016-05-15T12:24:18.000Z" itemprop="datePublished">2016-05-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      从malloc看内存管理
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        <p>malloc内部原因和应用<br><a id="more"></a></p>
+<h2 id="一-疑虑"><a href="#一-疑虑" class="headerlink" title="一,疑虑"></a>一,疑虑</h2><p>有一次在探索malloc分配的时候依然发现，malloc的内存分配情况和实际看到的结果不符合，如下图：</p>
+<p><img src="/images/4.png" alt="这是一张图片"><br><img src="/images/5.png" alt="这是一张图片"><br><img src="/images/6.png" alt="这是一张图片"><br><img src="/images/7.png" alt="这是一张图片"></p>
+<h2 id="二-猜想"><a href="#二-猜想" class="headerlink" title="二,猜想"></a>二,猜想</h2><p>1，  从图1和图2可以看出，当用malloc分配400字节内存，进程的内存大小并没有发生变化。所以我作出猜想，内存是之前就分配好的，当用malloc分配400字节内存的时候，其实是使用了400字节之前分配的内存。</p>
+<p>2，  从图2和图3可以看出，当用malloc分配3000字节的内存，进程大小变化了，</p>
+<p>内存增加了4K。</p>
+<p>3，  从图4可以看出，当用malloc分配4100字节的时候，进程内存大小又增加了8K。所有我作出猜想，程序每次分配内存都是以4K为单位的。每分配一次至少为4K，如果分配大一些，那就是4K的倍数。</p>
+<h2 id="三-解决"><a href="#三-解决" class="headerlink" title="三,解决"></a>三,解决</h2><p>1，  经过查阅资料，发现malloc内部维护了多个链表，每个链表的节点标示一块内存信息，这样malloc内部相当于维护了一个预先分配的内存池。</p>
+<p>Malloc每部维护了这样一个结构体。</p>
+<p>struct mem_control_block {<br>    int is_available;<br>    int size;<br>};</p>
+<p>把每个内存块标记为是否可用，以及大小。</p>
+<p>从以上查阅资料来看，图1和图2就有了结论，那是因为400个字节内存，是用的malloc预先分配的内存。所以进程的内存显示没有增长。</p>
+<p>2，  从图3可以看出，malloc维护的内存没有3000字节那么大。所以又向操作系统申请了内存，但为什么malloc为什么不向内存申请3000字节，而要申请4KB。结合图4来看，用户用malloc分配了4100字节，而实际是向操作系统申请了8KB的空间。这让我想到了操作系统的内存分页方式，操作系统为了让每个进程的内存空间相互独立，开启了内存分页，然后把实体内存映射为进程的虚拟内存，用一个页目录管理所有的页表。而一个页表正好是4KB。所以操作系统给每个独立的进程分配空间时，是以页来分配的，一个页是4KB。</p>
+<h2 id="四-总结"><a href="#四-总结" class="headerlink" title="四,总结"></a>四,总结</h2><p>1，  malloc在程序启动的时候预先分配了内存，以链表的形式管理</p>
+<p>2，  用户进程不是直接向操作系统申请空间的，而是先向malloc申请，malloc维护的内存不够了才向操作系统申请。</p>
+<p>3，  事实上对于操作系统或者硬件来说根本没有堆内存的概念。只有栈，用ss:sp寄存器来操作堆栈数据。堆的概念是对于malloc来说的，当用户使用malloc分配空间的时候，其实使用的是malloc里维护的内存，malloc把返回给用户的地址指向的内存标记为已用。free的时候把这块内存又标记为可用。</p>
+<h2 id="五-延伸"><a href="#五-延伸" class="headerlink" title="五,延伸"></a>五,延伸</h2><p>1，  在一个频繁分配内存的场景下，用户可以根据业务定制自己的内存池。</p>
+<p>而不必使用malloc维护的内存池。malloc的内存池面对的所以的用户。这样可以提升内存分配的效率。</p>
+<p>2, 从上面的现象来看，有时候小量的内存泄漏，通过查看进程管理器的方式，看不出来。而恰恰内存泄漏在一个不是被经常调用的函数里，所以在自己公司里测试的时候并没有测试出问题。但是到了现场，日积月累，泄漏就大了。</p>
+<p>在做内存泄漏查找的时候，并不仅仅依靠进程管理器就够了，可以对内存分配函数（操作符）进行封装，统计程序里所有内存分配释放情况。很多内存泄漏检测工具就是通过这个原理来做，例如C++的vld。下面我对malloc写一段伪代码做个释放。</p>
+<p>因为以前公司也有过对malloc封装，以免误会，我就不把代码写明。</p>
+<pre><code>void* my_malloc(usigned int size,usigned int index, char* c_file, usigned int line_number)
+
+{
+
+//size为要分配的大小，index为做分配的内存块做一个标记，c_file为哪个c文件
+
+//line_number为文件第几行。
+
+//定义一个char *my_mem_info[]的数组把所有已分配内存信息都写入这个数组。
+
+//定义一个 int count变量，统计申请的总次数
+
+//用p=malloc()分配一块内存，内存大小为size+sizeof(index)
+
+//把index记录在指针p的头部，为了在free内存的时候找到是释放的哪个index的内存，把这个记录清理
+
+//return p+ sizeof(index)
+
+}
+</code></pre><p>这样，在检查内存泄漏的时候打印my_mem_info[]这个数组，可以检查哪些内存还没释放</p>
+<pre><code>void my_free(void * p)
+
+{
+
+       //去处p前面的4字节，也就是index
+
+       //在my_mem_info[]里匹配这个index，并清理这块内存记录
+
+       //用free释放p
+
+}  
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/05/15/多任务定时处理逻辑/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">多任务定时处理逻辑(使用超时队列)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 John Doe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

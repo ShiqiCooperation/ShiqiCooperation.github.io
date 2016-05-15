@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>多任务定时处理逻辑(使用超时队列) | shiqi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="超时队列处理带时间要求的多任务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多任务定时处理逻辑(使用超时队列)">
+<meta property="og:url" content="http://yoursite.com/2016/05/15/多任务定时处理逻辑/index.html">
+<meta property="og:site_name" content="shiqi">
+<meta property="og:description" content="超时队列处理带时间要求的多任务">
+<meta property="og:updated_time" content="2016-05-15T13:30:54.956Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多任务定时处理逻辑(使用超时队列)">
+<meta name="twitter:description" content="超时队列处理带时间要求的多任务">
+  
+    <link rel="alternative" href="/atom.xml" title="shiqi" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/dog.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-ribbon" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						<div class="icon-wrap icon-house hide" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Tags</li>
+						<li>Menu</li>
+						
+						<li>Links</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				
+				<section class="switch-part switch-part1">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+
+				<section class="switch-part switch-part2">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/dog.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-多任务定时处理逻辑" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/15/多任务定时处理逻辑/" class="article-date">
+  	<time datetime="2016-05-15T11:46:27.000Z" itemprop="datePublished">2016-05-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      多任务定时处理逻辑(使用超时队列)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        <p>超时队列处理带时间要求的多任务<br><a id="more"></a><br>之前做过几个定时处理多个任务的功能，感觉处理的不是很好。现在回想下其实有更好的处理方案。</p>
+<p>场景1:小A让你每隔3秒钟给他发个消息，小B让你每隔4秒给他发个消息，小C让你每个3秒钟给他发个消息，小D每隔19秒，小E7秒，小F10秒。</p>
+<p>场景2：我这边做为服务器端，客户端发一个请求消息过来，请求消息里时间段。比如：XXXXXXXXXXXXXXXXX30。我解析这个消息，得到30。接下来需要等30秒才能给他回复应答。服务器需要面对成千个客户端，每个客户端发送请求消息过来，都会带有一个时间m。接下里需要延迟m秒，来给发送请求的客户端回复。</p>
+<p>当然，任务这么多，不可能开N个线程，N个定时器，肯定是用任务队列来做。</p>
+<h3 id="以前的设计-场景1-："><a href="#以前的设计-场景1-：" class="headerlink" title="以前的设计(场景1)："></a>以前的设计(场景1)：</h3><p>用一个线程去统计时间，n=0;线程里每sleep(1000);n++; 也就是说每过1秒钟n加1。然后用n除以3，19,7,10,4,30。如果余数为0，表示时间到了，可以发送消息了。</p>
+<p>弊端：假如任务种类非常多，任务链表足够长。3,19,7,……..10,4,30。当前时间n=30，线程开始遍历任务链表，从3开始遍历，当遍历到10的时候。这时候时间变了。n=31。这时候当线程遍历到30的时候，这个30本来是要发送的。结果没有被发送，要等到下一轮。这是就漏点了。这种情况是有可能发生的，因为任务是用死循环来执行。可能出现一种情况就是n=30.9999秒，从链表头开始遍历，这时候遍历到30，n就变成31了。这种设计显然是不精确的。场景2存在同样的问题。</p>
+<h3 id="改进-场景2-："><a href="#改进-场景2-：" class="headerlink" title="改进(场景2)："></a>改进(场景2)：</h3><p>后来想到一个解决漏点问题的方案，就是采用超时设计。把队列中的相对时间3,19,7,10,4,30，换算成为绝对时间。把收到请求消息的当前时间t,加上消息结构里的时间。t+3,t+19,t+7,t+10,t+4,t+30。然后插入链表，这样时间就可以比较大小了。用一个线程去遍历时间链表，当当前时间n&gt;t+3 ,t+19,t+7….. 表示已经超时，应答报文可以发送了。成功的解决了漏点的问题。</p>
+<h3 id="再改进-场景2"><a href="#再改进-场景2" class="headerlink" title="再改进(场景2):"></a>再改进(场景2):</h3><p>后来想想，改进后的版本。在效率上也不是太好。因为需要一个线程去不断的遍历时间链表。浪费服务器资源。不如把队列做成优先队列。以时间作为优选标准。每次收到请求报文后，取出时间报文，换算出绝对时间。然后把时间按插入排序的方式插入时间队列。这样时间队列就是一个按时间先后而有序的队列。这样任务执行队列里面，只要一次取出时间队列的头节点。判断是否已经超时。如果第一个节点超时，就执行发送报文，并删除此节点。接着判断第二个节点（此时已经为头结点）。反之，如果头结点没有超时，那之后的节点也不会超时。这样设计是几种方案里最优的。另外需要注意的是：优先队列的排序有多种，除了插入排序还有堆排序。各有好处。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/15/从malloc看内存管理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          从malloc看内存管理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/14/linux中的空格转意/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linux中的 &quot;\ &quot;</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 John Doe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
