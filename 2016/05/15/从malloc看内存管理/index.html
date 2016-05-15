@@ -8,7 +8,7 @@
   <meta name="description" content="一,疑虑有一次在探索malloc分配的时候依然发现，malloc的内存分配情况和实际看到的结果不符合，如下图：
 
 二,猜想1，  从图1和图2可以看出，当用malloc分配400字节内存，进程的内存大小并没有发生变化。所以我作出猜想，内存是之前就分配好的，当用malloc分配400字节内存的时候，其实是使用了400字节之前分配的内存。
-2，  从图2和图3可以看出，当用malloc分配3000字节">
+2，  从图2和图3可以看出，当用malloc分配3000字">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从malloc看内存管理">
 <meta property="og:url" content="http://yoursite.com/2016/05/15/从malloc看内存管理/index.html">
@@ -16,18 +16,18 @@
 <meta property="og:description" content="一,疑虑有一次在探索malloc分配的时候依然发现，malloc的内存分配情况和实际看到的结果不符合，如下图：
 
 二,猜想1，  从图1和图2可以看出，当用malloc分配400字节内存，进程的内存大小并没有发生变化。所以我作出猜想，内存是之前就分配好的，当用malloc分配400字节内存的时候，其实是使用了400字节之前分配的内存。
-2，  从图2和图3可以看出，当用malloc分配3000字节">
+2，  从图2和图3可以看出，当用malloc分配3000字">
 <meta property="og:image" content="http://yoursite.com/images/4.png">
 <meta property="og:image" content="http://yoursite.com/images/5.png">
 <meta property="og:image" content="http://yoursite.com/images/6.png">
 <meta property="og:image" content="http://yoursite.com/images/7.png">
-<meta property="og:updated_time" content="2016-05-15T13:05:44.540Z">
+<meta property="og:updated_time" content="2016-05-15T13:23:10.220Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从malloc看内存管理">
 <meta name="twitter:description" content="一,疑虑有一次在探索malloc分配的时候依然发现，malloc的内存分配情况和实际看到的结果不符合，如下图：
 
 二,猜想1，  从图1和图2可以看出，当用malloc分配400字节内存，进程的内存大小并没有发生变化。所以我作出猜想，内存是之前就分配好的，当用malloc分配400字节内存的时候，其实是使用了400字节之前分配的内存。
-2，  从图2和图3可以看出，当用malloc分配3000字节">
+2，  从图2和图3可以看出，当用malloc分配3000字">
 <meta name="twitter:image" content="http://yoursite.com/images/4.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -99,7 +99,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一-疑虑"><a href="#一-疑虑" class="headerlink" title="一,疑虑"></a>一,疑虑</h2><p>有一次在探索malloc分配的时候依然发现，malloc的内存分配情况和实际看到的结果不符合，如下图：</p>
+        <a id="more"></a>
+<h2 id="一-疑虑"><a href="#一-疑虑" class="headerlink" title="一,疑虑"></a>一,疑虑</h2><p>有一次在探索malloc分配的时候依然发现，malloc的内存分配情况和实际看到的结果不符合，如下图：</p>
 <p><img src="/images/4.png" alt="这是一张图片"><br><img src="/images/5.png" alt="这是一张图片"><br><img src="/images/6.png" alt="这是一张图片"><br><img src="/images/7.png" alt="这是一张图片"></p>
 <h2 id="二-猜想"><a href="#二-猜想" class="headerlink" title="二,猜想"></a>二,猜想</h2><p>1，  从图1和图2可以看出，当用malloc分配400字节内存，进程的内存大小并没有发生变化。所以我作出猜想，内存是之前就分配好的，当用malloc分配400字节内存的时候，其实是使用了400字节之前分配的内存。</p>
 <p>2，  从图2和图3可以看出，当用malloc分配3000字节的内存，进程大小变化了，</p>
@@ -150,12 +151,11 @@
        //用free释放p
 
 }  
-</code></pre><a id="more"></a>
-
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/从malloc看内存管理/" data-id="cio8lj6z00002wolmrv175yrd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/15/从malloc看内存管理/" data-id="cio8m4yh20000b8lmep61mh6u" class="article-share-link">Share</a>
       
       
     </footer>
